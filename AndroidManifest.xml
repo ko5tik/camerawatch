@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="de.pribluda.android.camerawatch"
+          android:versionCode="42"
+          android:versionName="1.33"
+        >
+    <uses-sdk android:minSdkVersion="3"/>
+    <supports-screens android:smallScreens="true"
+                      android:normalScreens="true"
+                      android:largeScreens="true"
+                      android:anyDensity="true"/>
+
+
+    <application
+            android:label="Kamera Watch"
+            android:theme="@android:style/Theme.Black">
+    </application>
+
+    <!--
+       necessary permissions
+      internet for ad receiving and high score dissemination
+    -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+</manifest>
