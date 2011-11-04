@@ -14,6 +14,12 @@
     <application
             android:label="Kamera Watch"
             android:theme="@android:style/Theme.Black">
+        <activity android:name=".CameraWatch" android:label="Kamerakarte">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
     <!--
