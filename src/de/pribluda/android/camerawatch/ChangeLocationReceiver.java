@@ -39,5 +39,6 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
         criteria.setAltitudeRequired(false);
         criteria.setCostAllowed(false);
         criteria.setPowerRequirement(config.getPowerRequirement());
+        criteria.setAccuracy(config.getAccuracy());
     }
 }

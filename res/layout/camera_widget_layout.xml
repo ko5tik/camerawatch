@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:padding="5dp"
+              android:background="@drawable/cartouche"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/camerawidget">
+    <!--
+       Please add icon here
+    -->
+    <LinearLayout android:orientation="vertical"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:gravity="center_vertical">
+
+           <TextView android:id="@+id/widget_location"
+                     android:textSize="20dp"
+                     android:text=""
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:paddingLeft="5dp"
+                     android:gravity="right"/>
+           <TextView android:id="@+id/widget_amount_cameras"
+                     android:textSize="25dp"
+                     android:text="start new game"
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:paddingLeft="10dp"
+                   />
+           <TextView android:id="@+id/widget_security"
+                     android:textSize="20dp"
+                     android:text=""
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:paddingLeft="5dp"
+                     android:gravity="right"/>
+       </LinearLayout>
 
 </LinearLayout>
