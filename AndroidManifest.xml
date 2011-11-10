@@ -13,7 +13,8 @@
 
     <application
             android:label="Kamera Watch"
-            android:theme="@android:style/Theme.Black">
+            android:theme="@android:style/Theme.Black"
+            android:icon="@drawable/icon">
         <activity android:name=".CameraWatch" android:label="Kamerakarte">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,6 +27,18 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".ChangeLocationReceiver"/>
+        <receiver android:name=".CameraWidgetProvider"
+                  android:label="@string/widgetTitle"
+                  android:icon="@drawable/icon">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="de.pribluda.android.camerawatch.LOCATION_CHANGED"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/camera_widget"
+                    />
+
+        </receiver>
     </application>
 
     <!--

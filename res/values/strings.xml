@@ -6,4 +6,9 @@
 
 <resources>
     <string name="widgetTitle">Kamerawidget von Piratenpartei Wiesbaden</string>
+    <string name="defaultLocation">Wiesbaden</string>
+    <string name="defaultCameras">23 Kameras</string>
+    <string name="defaultStatus">Hier bist du sicher!</string>
+    <string name="help">Hilfe</string>
+    <string name="recommend">Empfehlen</string>
 </resources>

@@ -13,6 +13,10 @@ public class BootInitializer extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("camerawatch.bootcomplete","received boot complete broadcast");
-        ChangeLocationReceiver.receiveLocationChanges(context);
+        try {
+            ChangeLocationReceiver.receiveLocationChanges(context);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 }

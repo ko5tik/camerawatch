@@ -5,6 +5,7 @@
                     android:minHeight="72dp"
                     android:updatePeriodMillis="0"
                     android:label="@string/widgetTitle"
-                    android:initialLayout="@layout/camera_widget_layout">
+                    android:initialLayout="@layout/camera_widget_layout"
+        >
 
 </appwidget-provider>
