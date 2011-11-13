@@ -1,5 +1,6 @@
 package de.pribluda.android.camerawatch;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +21,7 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
         Log.d(LOG_TAG, "received location change:" + intent);
 
         // update widget with location data
-        // .....
+        CameraWidgetProvider.displayCurrentState(context);
 
     }
 
@@ -29,7 +30,7 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
      *
      * @param context
      */
-    public static void receiveLocationChanges(Context context) throws IllegalAccessException {
+    public static void requestLocationChanges(Context context) {
         final Configuration config = Configuration.getInstance(context);
         LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -40,5 +41,16 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
         criteria.setCostAllowed(false);
         criteria.setPowerRequirement(config.getPowerRequirement());
         criteria.setAccuracy(config.getAccuracy());
+
+
+        if (!manager.isProviderEnabled(config.getProvider())) {
+              Log.d(LOG_TAG, "provider not availlable");
+            // update widget to tell about lack of available providers
+            CameraWidgetProvider.notifyNoProvider(context);
+        } else {
+            Log.d(LOG_TAG, "requesting periodic location updates");
+            manager.requestLocationUpdates(config.getProvider(), config.getMinTime(), config.getMinDistance(), PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT ));
+            CameraWidgetProvider.displayCurrentState(context);
+        }
     }
 }

@@ -26,13 +26,20 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".ChangeLocationReceiver"/>
+
+        <receiver android:name=".ChangeLocationReceiver"
+                  android:enabled="true"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="de.pribluda.android.camerawatch.LOCATION_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".CameraWidgetProvider"
                   android:label="@string/widgetTitle"
                   android:icon="@drawable/icon">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="de.pribluda.android.camerawatch.LOCATION_CHANGED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/camera_widget"

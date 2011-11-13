@@ -11,4 +11,5 @@
     <string name="defaultStatus">Hier bist du sicher!</string>
     <string name="help">Hilfe</string>
     <string name="recommend">Empfehlen</string>
+    <string name="noLocationProvider">Kein Location-Service</string>
 </resources>
