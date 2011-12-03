@@ -24,10 +24,10 @@ public class Configuration {
 
 
     @InjectPreference
-    private int minTime = 60000;
+    private int minTime = 300000;
 
     @InjectPreference
-    private float minDistance = 100;
+    private float minDistance = 300;
 
 
     public Configuration(Context context) {

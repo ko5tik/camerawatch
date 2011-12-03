@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="de.pribluda.android.camerawatch"
-          android:versionCode="42"
-          android:versionName="1.33"
+          android:versionCode="1"
+          android:versionName="0.1"
         >
     <uses-sdk android:minSdkVersion="3"/>
     <supports-screens android:smallScreens="true"

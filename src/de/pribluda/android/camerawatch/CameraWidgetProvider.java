@@ -81,7 +81,9 @@ public class CameraWidgetProvider extends AppWidgetProvider {
         LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         final Location lastKnownLocation = manager.getLastKnownLocation(Configuration.getInstance(context).getProvider());
-
+        if(lastKnownLocation == null) {
+            return;
+        }
         final double lat = lastKnownLocation.getLatitude();
         final double lon = lastKnownLocation.getLongitude();
 

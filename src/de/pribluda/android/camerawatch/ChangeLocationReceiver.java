@@ -5,12 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
+import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 
 /**
  * receives change location events and updates  status provider.  also fires up events to
  * update widget
+ * @author  Konstantin Pribluda
  */
 public class ChangeLocationReceiver extends BroadcastReceiver {
     public static final String LOG_TAG = "camerawatch.location_change";
@@ -23,7 +25,6 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
         // update widget with location data
         CameraWidgetProvider.displayCurrentState(context);
 
-    }
 
     /**
      * initialize location change listener by sending pending intent on location manager
@@ -53,4 +54,13 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
             CameraWidgetProvider.displayCurrentState(context);
         }
     }
+
+
+    /**
+     * retrieve actual location as good as possible
+     * @return
+     */
+    public static Location currentLocation() {
+    }
+}
 }
