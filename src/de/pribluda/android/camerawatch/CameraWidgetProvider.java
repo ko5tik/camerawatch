@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -34,7 +33,9 @@ public class CameraWidgetProvider extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
 
+
         Log.d(LOG_TAG, "was enabled");
+
     }
 
     @Override
@@ -43,8 +44,8 @@ public class CameraWidgetProvider extends AppWidgetProvider {
 
         Log.d(LOG_TAG, "was updated, activate location changes");
 
-        ChangeLocationReceiver.requestLocationChanges(context);
-
+        //ChangeLocationReceiver.requestLocationChanges(context);
+        displayCurrentState(context);
     }
 
     /**
@@ -78,10 +79,12 @@ public class CameraWidgetProvider extends AppWidgetProvider {
      * @param context
      */
     public static void displayCurrentState(Context context) {
-        LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-        final Location lastKnownLocation = manager.getLastKnownLocation(Configuration.getInstance(context).getProvider());
-        if(lastKnownLocation == null) {
+        final Configuration configuration = Configuration.getInstance(context);
+        final Location lastKnownLocation = ChangeLocationReceiver.lastBestLocation(context, configuration.getMaxAcceptableDinstance(),configuration.getMaxAcceptableAge());
+        if (lastKnownLocation == null) {
+            // request single update
+            Log.d(LOG_TAG,"no last state found. request single update");
             return;
         }
         final double lat = lastKnownLocation.getLatitude();
@@ -97,14 +100,12 @@ public class CameraWidgetProvider extends AppWidgetProvider {
             }
 
             if (addressList.size() > 0) {
-                updateWidgetState(context,"keine kameras",addressList.get(0).getLocality(), DateFormat.getTimeInstance().format(new Date()));
+                updateWidgetState(context, "keine kameras", addressList.get(0).getLocality(), DateFormat.getTimeInstance().format(new Date()));
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "excepion  in geocoder", e);
         }
 
-
-      
 
     }
 }

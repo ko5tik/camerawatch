@@ -29,13 +29,18 @@ public class Configuration {
     @InjectPreference
     private float minDistance = 300;
 
+    @InjectPreference
+    private float maxAcceptableDinstance = 1000;
+    @InjectPreference
+    private long maxAcceptableAge = 300000;
+
 
     public Configuration(Context context) {
         // perform field injection from shared preferences via andject
         try {
             PreferenceInjector.inject(this, context.getSharedPreferences(PREFERENCE_TAG, Context.MODE_PRIVATE));
         } catch (IllegalAccessException e) {
-            Log.e(LOG_TAG, "exception while reading configuration",e);
+            Log.e(LOG_TAG, "exception while reading configuration", e);
         }
     }
 
@@ -79,10 +84,28 @@ public class Configuration {
         this.minDistance = minDistance;
     }
 
-    public static Configuration getInstance(final Context context)  {
+    public float getMaxAcceptableDinstance() {
+        return maxAcceptableDinstance;
+    }
+
+    public void setMaxAcceptableDinstance(float maxAcceptableDinstance) {
+        this.maxAcceptableDinstance = maxAcceptableDinstance;
+    }
+
+    public long getMaxAcceptableAge() {
+        return maxAcceptableAge;
+    }
+
+    public void setMaxAcceptableAge(long maxAcceptableAge) {
+        this.maxAcceptableAge = maxAcceptableAge;
+    }
+
+    public static Configuration getInstance(final Context context) {
         if (instance == null) {
             instance = new Configuration(context);
         }
         return instance;
     }
+
+
 }
