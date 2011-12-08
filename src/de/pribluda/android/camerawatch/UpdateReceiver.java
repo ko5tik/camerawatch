@@ -34,6 +34,7 @@ public class UpdateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        Log.d(LOG_TAG, "received intent: " + intent);
+        CameraWidgetProvider.displayCurrentState(context);
     }
 }
