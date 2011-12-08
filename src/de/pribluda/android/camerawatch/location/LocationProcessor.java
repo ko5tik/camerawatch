@@ -9,6 +9,7 @@ import android.location.Location;
  * @author Konstantin Pribluda
  */
 public interface LocationProcessor {
+    public static final String LOCATION_CHANGE_INTENT = "de.pribluda.android.camerawatch.LOCATION_CHANGED";
 
     /**
      * retrieve actual location as good as possible
@@ -17,7 +18,7 @@ public interface LocationProcessor {
      */
     Location retrieveLocation();
 
-    void processLocationUpdate(Location location);
+     Location processLocationUpdate(Location location);
 
     /**
      * request location update

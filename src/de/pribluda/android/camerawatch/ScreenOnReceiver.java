@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Location;
 import android.util.Log;
 
 
@@ -12,6 +11,7 @@ import android.util.Log;
  * receives screen on event to poke service for update  location
  *
  * @author Konstantin Pribluda
+ * @deprecated no way to register this from receiver.
  */
 public class ScreenOnReceiver extends BroadcastReceiver {
     public static final String LOG_TAG = "camerawatch.screen_on";
@@ -19,8 +19,8 @@ public class ScreenOnReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(LOG_TAG, "received screen on event");
 
-        final Location location = ChangeLocationReceiver.lastBestLocation(context, 5000, 600);
-        Log.d(LOG_TAG, "location: " + location);
+
+
     }
 
 

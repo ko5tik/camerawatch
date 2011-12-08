@@ -35,6 +35,15 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".UpdateReceiver"
+                  android:enabled="true"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="de.pribluda.android.camerawatch.UPDATE_ALARM"/>
+            </intent-filter>
+        </receiver>
+
+
         <receiver android:name=".CameraWidgetProvider"
                   android:label="@string/widgetTitle"
                   android:icon="@drawable/icon">

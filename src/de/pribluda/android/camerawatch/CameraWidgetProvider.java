@@ -11,6 +11,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import android.widget.RemoteViews;
+import de.pribluda.android.camerawatch.location.LocationProcessor;
+import de.pribluda.android.camerawatch.location.LocationProcessorProvider;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -44,6 +46,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
 
         Log.d(LOG_TAG, "was updated, activate location changes");
 
+         UpdateReceiver.activate(context);
         //ChangeLocationReceiver.requestLocationChanges(context);
         displayCurrentState(context);
     }
@@ -80,11 +83,14 @@ public class CameraWidgetProvider extends AppWidgetProvider {
      */
     public static void displayCurrentState(Context context) {
 
-        final Configuration configuration = Configuration.getInstance(context);
-        final Location lastKnownLocation = ChangeLocationReceiver.lastBestLocation(context, configuration.getMaxAcceptableDinstance(),configuration.getMaxAcceptableAge());
+
+        final LocationProcessor locationProcessor = LocationProcessorProvider.instance(context);
+        final Location lastKnownLocation = locationProcessor.retrieveLocation();
+
         if (lastKnownLocation == null) {
             // request single update
-            Log.d(LOG_TAG,"no last state found. request single update");
+            Log.d(LOG_TAG, "no last state found. request single update");
+            locationProcessor.requestLocationUpdate();
             return;
         }
         final double lat = lastKnownLocation.getLatitude();
@@ -100,7 +106,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
             }
 
             if (addressList.size() > 0) {
-                updateWidgetState(context, "keine kameras", addressList.get(0).getLocality(), DateFormat.getTimeInstance().format(new Date()));
+                updateWidgetState(context, lastKnownLocation.toString() , addressList.get(0).getLocality(), DateFormat.getTimeInstance().format(new Date()));
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "excepion  in geocoder", e);
