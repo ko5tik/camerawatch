@@ -5,6 +5,6 @@
           shall use pirate orange, and white border
        -->
     <solid  android:color="#ffFF8800"/>
-    <stroke android:width="5dp" android:color="#ffffff"/>
+    <stroke android:width="3dp" android:color="#ffffff"/>
     <corners android:radius="20dp"/>
 </shape>

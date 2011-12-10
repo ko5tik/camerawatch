@@ -17,6 +17,7 @@ import de.pribluda.android.camerawatch.location.LocationProcessorProvider;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
 
         Log.d(LOG_TAG, "was updated, activate location changes");
 
-         UpdateReceiver.activate(context);
+        UpdateReceiver.activate(context);
         //ChangeLocationReceiver.requestLocationChanges(context);
         displayCurrentState(context);
     }
@@ -57,17 +58,18 @@ public class CameraWidgetProvider extends AppWidgetProvider {
      * @param context
      */
     public static void notifyNoProvider(Context context) {
-        updateWidgetState(context, context.getResources().getText(R.string.noLocationProvider), "", "");
+        updateWidgetState(context, context.getResources().getText(R.string.noLocationProvider), "", "", "");
     }
 
 
-    private static void updateWidgetState(Context context, CharSequence amountCameras, String locationCity, String securityStatus) {
+    private static void updateWidgetState(Context context, CharSequence amountCameras, String locationCity, String securityStatus, String locationStatus) {
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.camera_widget_layout);
         views.setOnClickPendingIntent(R.id.camerawidget, PendingIntent.getActivity(context, 0, new Intent(context, CameraWatch.class), PendingIntent.FLAG_UPDATE_CURRENT));
         views.setTextViewText(R.id.widget_amount_cameras, amountCameras);
         views.setTextViewText(R.id.widget_location, locationCity);
-        views.setTextViewText(R.id.widget_security, securityStatus);
+      //  views.setTextViewText(R.id.widget_security, securityStatus);
+        views.setTextViewText(R.id.locationStatus, locationStatus);
 
         final int[] appWidgetIds = manager.getAppWidgetIds(new ComponentName(CameraWidgetProvider.class.getPackage().getName(), CameraWidgetProvider.class.getName()));
 
@@ -105,8 +107,15 @@ public class CameraWidgetProvider extends AppWidgetProvider {
                 Log.d(LOG_TAG, "decoded address:" + address);
             }
 
+
             if (addressList.size() > 0) {
-                updateWidgetState(context, lastKnownLocation.toString() , addressList.get(0).getLocality(), DateFormat.getTimeInstance().format(new Date()));
+                StringBuilder sb = new StringBuilder();
+                final Formatter formatter = new Formatter(sb);
+
+                formatter.format(" %s (%3.4f : %3.4f) @ %s",lastKnownLocation.getProvider(),  lat, lon, DateFormat.getTimeInstance().format(new Date(lastKnownLocation.getTime())));
+
+                updateWidgetState(context, "keine daten", addressList.get(0).getLocality(), "",
+                        sb.toString());
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "excepion  in geocoder", e);
