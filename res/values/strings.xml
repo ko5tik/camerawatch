@@ -12,4 +12,6 @@
     <string name="help">Hilfe</string>
     <string name="recommend">Empfehlen</string>
     <string name="noLocationProvider">Kein Location-Service</string>
+    <string name="applicationTitle">Kamera Liste</string>
+    <string name="noLocationStatusYet">Positionsdaten nicht verfügbar. Bitte warten</string>
 </resources>
