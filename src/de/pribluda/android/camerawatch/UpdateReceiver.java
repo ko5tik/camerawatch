@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * activate periodic alarms
+ * handles periodic widget updates.  provides convenient static methods to activate and
+ * deactivate periodic widget updates
  *
  * @author Konstantin Pribluda
  */
@@ -17,20 +18,38 @@ public class UpdateReceiver extends BroadcastReceiver {
     public static final String ACTION = "de.pribluda.android.camerawatch.UPDATE_ALARM";
 
     public static void activate(Context context) {
-        AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        final Configuration configuration = Configuration.getInstance(context);
+
+        final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+
+        deactivate(context);
 
         Intent intent = new Intent(ACTION);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
-        Log.d(LOG_TAG, "pending intent: " + pendingIntent);
-        //  if no intent there, schedule it   ASAP
-        if (pendingIntent == null) {
-            pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-            // schedule new alarm in 15 minutes
-            alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(),300000, pendingIntent);
-            Log.d(LOG_TAG, "scheduled intent: " + pendingIntent);
-        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        //  schedule it   ASAP
+
+
+        // schedule new alarm
+        alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), configuration.getWidgetUpdateInterval(), pendingIntent);
+        Log.d(LOG_TAG, "scheduled pending intent vor:"  + configuration.getWidgetUpdateInterval());
+
 
     }
+
+    private static void deactivate(Context context) {
+        Intent intent = new Intent(ACTION);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
+
+        Log.d(LOG_TAG, "deactivating updates? ...");
+        // cancel if already there
+        if (pendingIntent != null) {
+            Log.d(LOG_TAG, "deactivated intent");
+            pendingIntent.cancel();
+        }
+    }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {

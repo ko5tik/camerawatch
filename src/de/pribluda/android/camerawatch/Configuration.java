@@ -22,6 +22,14 @@ public class Configuration {
     @InjectPreference
     private String provider = "gps";
 
+    // periodic widget updates
+    @InjectPreference
+    private int widgetUpdateInterval = 300000;
+
+    // whether periodic updates are active
+    @InjectPreference
+    private boolean widgetUpdatesActive = true;
+
 
     @InjectPreference
     private int minTime = 300000;
@@ -107,5 +115,19 @@ public class Configuration {
         return instance;
     }
 
+    public int getWidgetUpdateInterval() {
+        return widgetUpdateInterval;
+    }
 
+    public void setWidgetUpdateInterval(int widgetUpdateInterval) {
+        this.widgetUpdateInterval = widgetUpdateInterval;
+    }
+
+    public boolean isWidgetUpdatesActive() {
+        return widgetUpdatesActive;
+    }
+
+    public void setWidgetUpdatesActive(boolean widgetUpdatesActive) {
+        this.widgetUpdatesActive = widgetUpdatesActive;
+    }
 }

@@ -103,7 +103,7 @@ public class CameraWatch extends Activity {
 
         locationProcessor.requestLocationUpdate();
         CameraWidgetProvider.displayCurrentState(this);
-
+        UpdateReceiver.activate(this);
 
     }
 }

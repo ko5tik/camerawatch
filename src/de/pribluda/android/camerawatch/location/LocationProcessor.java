@@ -18,7 +18,7 @@ public interface LocationProcessor {
      */
     Location retrieveLocation();
 
-     Location processLocationUpdate(Location location);
+    Location processLocationUpdate(Location location);
 
     /**
      * request location update

@@ -93,6 +93,9 @@ public class CameraWidgetProvider extends AppWidgetProvider {
             // request single update
             Log.d(LOG_TAG, "no last state found. request single update");
             locationProcessor.requestLocationUpdate();
+
+            notifyNoProvider(context);
+
             return;
         }
         final double lat = lastKnownLocation.getLatitude();
