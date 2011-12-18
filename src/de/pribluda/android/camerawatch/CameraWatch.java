@@ -6,7 +6,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.Window;
+import android.widget.ListView;
 import android.widget.TextView;
 import de.pribluda.android.andject.InjectView;
 import de.pribluda.android.andject.ViewInjector;
@@ -28,7 +31,14 @@ public class CameraWatch extends Activity {
     @InjectView(id = R.id.activityLocationStatus)
     private TextView locationStatusText;
 
+    @InjectView(id = R.id.cameraList)
+    private ListView cameraList;
+
+
     private LocationProcessor locationProcessor;
+
+    private CameraProvider cameraProvider;
+    private CameraAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +50,14 @@ public class CameraWatch extends Activity {
         ViewInjector.startActivity(this);
 
         this.locationProcessor = LocationProcessorProvider.instance(this);
+        try {
+            cameraProvider = CameraProvider.instance(this);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "unable to create camera provider", e);
+        }
 
+        adapter = new CameraAdapter(this);
+        cameraList.setAdapter(adapter);
     }
 
 
@@ -87,11 +104,25 @@ public class CameraWatch extends Activity {
                 Log.e(LOG_TAG, "excepion  in geocoder", e);
             }
 
+            updateCameraList(location);
+
         } else {
             // no location available,  can not update, request location update
             // ASAP
             locationProcessor.requestLocationUpdate();
         }
+
+
+    }
+
+    /**
+     * update location
+     *
+     * @param location
+     */
+    private void updateCameraList(Location location) {
+
+           adapter.setCameraList(cameraProvider.getCameraList(location));
     }
 
     /**
@@ -106,4 +137,12 @@ public class CameraWatch extends Activity {
         UpdateReceiver.activate(this);
 
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
 }
