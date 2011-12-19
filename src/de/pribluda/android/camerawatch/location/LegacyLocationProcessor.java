@@ -110,7 +110,7 @@ public class LegacyLocationProcessor implements LocationProcessor {
             CameraWidgetProvider.notifyNoProvider(context);
         } else {
             Log.d(LOG_TAG, "requesting periodic location updates");
-            locationManager.requestLocationUpdates(configuration.getProvider(), 0, 0, PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
+            locationManager.requestLocationUpdates(configuration.getProvider(), 120000, 50, PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
         }
     }
 }

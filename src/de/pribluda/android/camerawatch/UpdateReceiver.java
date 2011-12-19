@@ -32,8 +32,8 @@ public class UpdateReceiver extends BroadcastReceiver {
 
 
         // schedule new alarm
-        alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), configuration.getWidgetUpdateInterval(), pendingIntent);
-        Log.d(LOG_TAG, "scheduled pending intent vor:"  + configuration.getWidgetUpdateInterval());
+        alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + configuration.getWidgetUpdateInterval(), configuration.getWidgetUpdateInterval(), pendingIntent);
+        Log.d(LOG_TAG, "scheduled pending intent vor:" + configuration.getWidgetUpdateInterval());
 
 
     }
