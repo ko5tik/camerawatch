@@ -1,5 +1,8 @@
 <resources>
-    <style>
+    <color name="pirateOrange">#ffFF8800</color>
+    <style name="pirateBasic">
+        <item name="android:background">#ffFF8800</item>
+        <item name="android:textColor">#ffffffff</item>
 
     </style>
 </resources>
