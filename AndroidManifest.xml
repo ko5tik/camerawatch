@@ -41,6 +41,7 @@
                   android:exported="true">
             <intent-filter>
                 <action android:name="de.pribluda.android.camerawatch.UPDATE_ALARM"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
             </intent-filter>
         </receiver>
 

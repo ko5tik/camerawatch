@@ -10,6 +10,7 @@ import android.location.Location;
  */
 public interface LocationProcessor {
     public static final String LOCATION_CHANGE_INTENT = "de.pribluda.android.camerawatch.LOCATION_CHANGED";
+    public static final String LOCATION_STOP_UPDATES = "de.pribluda.android.camerawatch.LOCATION_CHANGED";
 
     /**
      * retrieve actual location as good as possible
@@ -25,4 +26,8 @@ public interface LocationProcessor {
      */
     void requestLocationUpdate();
 
+    /**
+     * stop location updates
+     */
+    void stopUpdates();
 }

@@ -1,5 +1,6 @@
 package de.pribluda.android.camerawatch.location;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import de.pribluda.android.camerawatch.Configuration;
  */
 public class LegacyLocationProcessor implements LocationProcessor {
     public static final String LOG_TAG = "camerawatch.legacyLocationProcesor";
+    public static final int CANCEL_INTERVAL = 60000;
     Location cached;
 
     final Context context;
@@ -24,7 +26,7 @@ public class LegacyLocationProcessor implements LocationProcessor {
     private final LocationManager locationManager;
 
     /**
-     * initialiyze  legacy provided
+     * initialize  legacy provider
      *
      * @param context
      */
@@ -32,7 +34,6 @@ public class LegacyLocationProcessor implements LocationProcessor {
         this.context = context;
         configuration = Configuration.getInstance(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
     }
 
     /**
@@ -86,11 +87,15 @@ public class LegacyLocationProcessor implements LocationProcessor {
         Log.d(LOG_TAG, "updating location:" + location);
 
         cached = location;
+        stopUpdates();
 
+        return cached;
+    }
+
+    public void stopUpdates() {
         // disable location sending to save battery
         locationManager.removeUpdates(PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
-        Log.d(LOG_TAG, "canceled pending intent" );
-        return cached;
+        Log.d(LOG_TAG, "canceled location updates");
     }
 
     public void requestLocationUpdate() {
@@ -111,6 +116,16 @@ public class LegacyLocationProcessor implements LocationProcessor {
         } else {
             Log.d(LOG_TAG, "requesting periodic location updates");
             locationManager.requestLocationUpdates(configuration.getProvider(), 120000, 50, PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
+
+            // schedule cancelation of location service
+
+            final PendingIntent cancelIntent = PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT).putExtra(LOCATION_STOP_UPDATES, "xx"),PendingIntent.FLAG_UPDATE_CURRENT);
+
+            final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + CANCEL_INTERVAL, configuration.getWidgetUpdateInterval(), cancelIntent);
+
         }
     }
+
+
 }

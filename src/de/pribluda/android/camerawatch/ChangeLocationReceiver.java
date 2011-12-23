@@ -35,6 +35,9 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
             location =  locationProcessor.processLocationUpdate(location);
             // update widget with location data
             CameraWidgetProvider.displayCurrentState(context);
+        }  else if(intent.hasExtra(LocationProcessor.LOCATION_STOP_UPDATES)) {
+            Log.d(LOG_TAG, "canceling location update ");
+            locationProcessor.stopUpdates();
         }
     }
 
