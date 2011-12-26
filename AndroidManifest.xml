@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".Settings"/>
         <receiver android:name=".BootInitializer">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
