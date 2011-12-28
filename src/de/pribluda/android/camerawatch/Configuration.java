@@ -12,6 +12,8 @@ import de.pribluda.android.andject.PreferenceInjector;
 public class Configuration {
     public static final String LOG_TAG = "camerawatch.configuration";
     public static final String PREFERENCE_TAG = "preferences";
+    public static final String HELP_URL = "http://ppwi.de/kameras/details_mobile.aspx";
+    public static final String CAMERA_DETAIL_URL = "http://ppwi.de/kameras/details_mobile.aspx";
     private static Configuration instance;
 
     @InjectPreference

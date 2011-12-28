@@ -3,7 +3,6 @@
   ~ Copyright (c) 2009 Konstantin Pribluda
   ~ http://www.pribluda.de
   -->
-
 <resources>
     <string name="widgetTitle">Kamerawidget von Piratenpartei Wiesbaden</string>
     <string name="defaultLocation">Wiesbaden</string>
@@ -15,4 +14,6 @@
     <string name="applicationTitle">Kamera Liste</string>
     <string name="noLocationStatusYet">Positionsdaten nicht verfügbar. Bitte warten</string>
     <string name="settings">Einstellungen</string>
+    <string name="recommendation_subject">Empfehlungstitel</string>
+    <string name="recommendation_body">Empfehlungstest</string>
 </resources>

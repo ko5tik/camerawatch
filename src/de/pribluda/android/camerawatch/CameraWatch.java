@@ -1,13 +1,16 @@
 package de.pribluda.android.camerawatch;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -122,7 +125,7 @@ public class CameraWatch extends Activity {
      */
     private void updateCameraList(Location location) {
 
-           adapter.setCameraList(cameraProvider.getCameraList(location));
+        adapter.setCameraList(cameraProvider.getCameraList(location));
     }
 
     /**
@@ -145,4 +148,23 @@ public class CameraWatch extends Activity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (R.action.help == item.getItemId()) {
+            // show help document,  we use online help
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Configuration.HELP_URL));
+            startActivity(browserIntent);
+            return true;
+        } else if (R.action.settings == item.getItemId()) {
+            startActivity(new Intent(this, Settings.class));
+            return true;
+        } else if (R.action.recommend == item.getItemId()) {
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setType("text/plain");
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.recommendation_subject));
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.recommendation_body));
+            startActivity(emailIntent);
+        }
+        return false;
+    }
 }
