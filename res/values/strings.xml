@@ -16,4 +16,9 @@
     <string name="settings">Einstellungen</string>
     <string name="recommendation_subject">Empfehlungstitel</string>
     <string name="recommendation_body">Empfehlungstest</string>
+    <string name="settingsInfo">Einstellungen werden automatisch gespeichert!</string>
+    <string name="providerChoice">Location-Quellen:</string>
+    <string name="updateInterval">Update-Interval:</string>
+    <string name="updateDistance">Update-Entfernung:</string>
+    <string name="showDistance">Anzeigen im Umkreis:</string>
 </resources>

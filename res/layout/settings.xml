@@ -3,6 +3,81 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        android:orientation="vertical">
+              android:orientation="vertical">
 
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/icon">
+        </ImageView>
+
+        <TextView
+                android:text="@string/settingsInfo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="center_vertical"/>
+
+
+    </LinearLayout>
+
+    <ImageView android:src="@drawable/thin_separator_h"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:padding="5dp"
+            />
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <TextView android:text="@string/providerChoice"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      style="@style/pirateLabel"/>
+
+
+            <ImageView android:src="@drawable/thin_separator_h"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                    />
+
+            <TextView  android:text="@string/updateInterval"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       style="@style/pirateLabel"/>
+            <ImageView android:src="@drawable/thin_separator_h"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                    />
+
+            <TextView  android:text="@string/updateDistance"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       style="@style/pirateLabel"/>
+            <ImageView android:src="@drawable/thin_separator_h"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                    />
+
+
+            <TextView  android:text="@string/showDistance"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       style="@style/pirateLabel"/>
+            <ImageView android:src="@drawable/thin_separator_h"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                    />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
