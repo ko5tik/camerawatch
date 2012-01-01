@@ -5,7 +5,7 @@
         <item name="android:textColor">#ffffffff</item>
     </style>
     <style name="pirateLabel" parent="pirateBasic">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>

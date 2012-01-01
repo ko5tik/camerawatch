@@ -109,21 +109,23 @@ public class LegacyLocationProcessor implements LocationProcessor {
         criteria.setAccuracy(configuration.getAccuracy());
 
 
-        if (!locationManager.isProviderEnabled(configuration.getProvider())) {
-            Log.d(LOG_TAG, "provider not availlable");
-            // update widget to tell about lack of available providers
-            CameraWidgetProvider.notifyNoProvider(context);
-        } else {
-            Log.d(LOG_TAG, "requesting periodic location updates");
-            locationManager.requestLocationUpdates(configuration.getProvider(), 120000, 50, PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
+        for (String provider : configuration.getActiveProvider().split("|")) {
 
-            // schedule cancelation of location service
 
-            final PendingIntent cancelIntent = PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT).putExtra(LOCATION_STOP_UPDATES, "xx"),PendingIntent.FLAG_UPDATE_CURRENT);
+            if (!locationManager.isProviderEnabled(provider)){
+                Log.d(LOG_TAG, "provider not availlable: " + provider);
+                // update widget to tell about lack of available providers
+                CameraWidgetProvider.notifyNoProvider(context);
+            }else{
+                Log.d(LOG_TAG, "requesting periodic location updates");
+                locationManager.requestLocationUpdates(provider, 120000, 50, PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
 
-            final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + CANCEL_INTERVAL, configuration.getWidgetUpdateInterval(), cancelIntent);
+                // schedule cancelation of location service
+                final PendingIntent cancelIntent = PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT).putExtra(LOCATION_STOP_UPDATES, "xx"), PendingIntent.FLAG_UPDATE_CURRENT);
+                final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + CANCEL_INTERVAL, configuration.getWidgetUpdateInterval(), cancelIntent);
 
+            }
         }
     }
 

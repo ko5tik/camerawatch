@@ -22,7 +22,10 @@ public class Configuration {
     private int accuracy = Criteria.ACCURACY_COARSE;
 
     @InjectPreference
-    private String provider = "gps";
+    private String activeProvider = "";
+
+    @InjectPreference
+    private String passiveProvider = "";
 
     // periodic widget updates
     @InjectPreference
@@ -54,6 +57,18 @@ public class Configuration {
         }
     }
 
+
+    /**
+     * save preferences
+     */
+    public void save(Context context) {
+        try {
+            PreferenceInjector.eject(this, context.getSharedPreferences(PREFERENCE_TAG, Context.MODE_PRIVATE));
+        } catch (IllegalAccessException e) {
+            Log.e(LOG_TAG, "exception while saving configuration", e);
+        }
+    }
+
     public int getAccuracy() {
         return accuracy;
     }
@@ -76,14 +91,6 @@ public class Configuration {
 
     public void setMinTime(int minTime) {
         this.minTime = minTime;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
     }
 
     public float getMinDistance() {
@@ -131,5 +138,21 @@ public class Configuration {
 
     public void setWidgetUpdatesActive(boolean widgetUpdatesActive) {
         this.widgetUpdatesActive = widgetUpdatesActive;
+    }
+
+    public String getActiveProvider() {
+        return activeProvider;
+    }
+
+    public void setActiveProvider(String activeProvider) {
+        this.activeProvider = activeProvider;
+    }
+
+    public String getPassiveProvider() {
+        return passiveProvider;
+    }
+
+    public void setPassiveProvider(String passiveProvider) {
+        this.passiveProvider = passiveProvider;
     }
 }
