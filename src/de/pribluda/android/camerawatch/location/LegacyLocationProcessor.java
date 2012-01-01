@@ -111,13 +111,12 @@ public class LegacyLocationProcessor implements LocationProcessor {
 
         for (String provider : configuration.getActiveProvider().split("|")) {
 
-
-            if (!locationManager.isProviderEnabled(provider)){
+            if (!locationManager.isProviderEnabled(provider)) {
                 Log.d(LOG_TAG, "provider not availlable: " + provider);
                 // update widget to tell about lack of available providers
                 CameraWidgetProvider.notifyNoProvider(context);
-            }else{
-                Log.d(LOG_TAG, "requesting periodic location updates");
+            } else {
+                Log.d(LOG_TAG, "requesting periodic location update from:" + provider);
                 locationManager.requestLocationUpdates(provider, 120000, 50, PendingIntent.getBroadcast(context, 0, new Intent(LOCATION_CHANGE_INTENT), PendingIntent.FLAG_UPDATE_CURRENT));
 
                 // schedule cancelation of location service
