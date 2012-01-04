@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import de.pribluda.android.andject.InjectView;
 import de.pribluda.android.andject.ViewInjector;
 
@@ -24,6 +26,20 @@ public class Settings extends Activity {
     ViewGroup activeProviders;
     @InjectView(id = R.id.passiveContainer)
     ViewGroup passiveProviders;
+
+    @InjectView(id = R.id.updateDistance)
+    SeekBar updateDistance;
+    @InjectView(id = R.id.updateDistanceLabel)
+    TextView updateDistanceLabel;
+
+    @InjectView(id = R.id.displayDistance)
+    SeekBar displayDistance;
+    @InjectView(id = R.id.displayDistanceLabel)
+    TextView dsplayDistanceLabel;
+    @InjectView(id = R.id.updateInterval)
+    SeekBar updateInterval;
+    @InjectView(id = R.id.updateIntervalLabel)
+    TextView updateIntervalLabel;
 
     private final ArrayList<CheckBox> activeCheckboxes = new ArrayList<CheckBox>();
     private final ArrayList<CheckBox> passiveCheckboxes = new ArrayList<CheckBox>();
@@ -55,7 +71,6 @@ public class Settings extends Activity {
             passiveProviders.addView(checkBox);
             passiveCheckboxes.add(checkBox);
             checkBox.setChecked(configuration.getActiveProvider().contains(provider));
-
         }
 
     }
@@ -87,6 +102,7 @@ public class Settings extends Activity {
         }
         configuration.setPassiveProvider(stringBuilder.toString());
         Log.d(LOG_TAG, "created passive string:" + configuration.getPassiveProvider());
+
 
         configuration.save(this);
 

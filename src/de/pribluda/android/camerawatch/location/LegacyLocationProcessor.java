@@ -109,7 +109,7 @@ public class LegacyLocationProcessor implements LocationProcessor {
         criteria.setAccuracy(configuration.getAccuracy());
 
 
-        for (String provider : configuration.getActiveProvider().split("|")) {
+        for (String provider : configuration.getActiveProvider().split("\\|")) {
 
             if (!locationManager.isProviderEnabled(provider)) {
                 Log.d(LOG_TAG, "provider not availlable: " + provider);
