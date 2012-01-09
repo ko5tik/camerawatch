@@ -22,7 +22,7 @@ public interface LocationProcessor {
     Location processLocationUpdate(Location location);
 
     /**
-     * request location update
+     * request periodic location updates
      */
     void requestLocationUpdate();
 

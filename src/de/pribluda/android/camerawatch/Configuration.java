@@ -37,10 +37,10 @@ public class Configuration {
 
 
     @InjectPreference
-    private int minTime = 300000;
+    private int locationUpdateInterval = 300000;
 
     @InjectPreference
-    private float minDistance = 300;
+    private float locationUpdateDistance = 300;
 
     @InjectPreference
     private float maxAcceptableDinstance = 1000;
@@ -48,6 +48,11 @@ public class Configuration {
     private long maxAcceptableAge = 300000;
 
 
+    /**
+     * create and populate from shared preferences
+     *
+     * @param context
+     */
     public Configuration(Context context) {
         // perform field injection from shared preferences via andject
         try {
@@ -55,6 +60,13 @@ public class Configuration {
         } catch (IllegalAccessException e) {
             Log.e(LOG_TAG, "exception while reading configuration", e);
         }
+    }
+
+    /**
+     * default constructor
+     */
+    public Configuration() {
+
     }
 
 
@@ -85,20 +97,25 @@ public class Configuration {
         this.powerRequirement = powerRequirement;
     }
 
-    public int getMinTime() {
-        return minTime;
+    /**
+     * location update interval in minutes,  0 means no updates
+     *
+     * @return
+     */
+    public int getLocationUpdateInterval() {
+        return locationUpdateInterval;
     }
 
-    public void setMinTime(int minTime) {
-        this.minTime = minTime;
+    public void setLocationUpdateInterval(int locationUpdateInterval) {
+        this.locationUpdateInterval = locationUpdateInterval;
     }
 
-    public float getMinDistance() {
-        return minDistance;
+    public float getLocationUpdateDistance() {
+        return locationUpdateDistance;
     }
 
-    public void setMinDistance(float minDistance) {
-        this.minDistance = minDistance;
+    public void setLocationUpdateDistance(float locationUpdateDistance) {
+        this.locationUpdateDistance = locationUpdateDistance;
     }
 
     public float getMaxAcceptableDinstance() {

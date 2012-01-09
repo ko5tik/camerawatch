@@ -73,6 +73,55 @@ public class Settings extends Activity {
             checkBox.setChecked(configuration.getActiveProvider().contains(provider));
         }
 
+
+        // initialize seekbar listeners
+        updateInterval.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int value, boolean byUser) {
+                // only if user did this
+
+                configuration.setWidgetUpdateInterval(value);
+                if (0 == value) {
+                    // deaktivated
+                    updateIntervalLabel.setText("Abgeschaltet");
+                } else {
+                    updateIntervalLabel.setText(value + " Min");
+                }
+
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // do nothing
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // do nothing
+            }
+        });
+
+        updateInterval.setProgress(configuration.getWidgetUpdateInterval());
+
+
+        updateDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int value, boolean b) {
+                configuration.setLocationUpdateDistance(value);
+                if (0 == value) {
+                    // deaktivated
+                    updateDistanceLabel.setText("Abgeschaltet");
+                } else {
+                    updateDistanceLabel.setText(value + " meter");
+                }
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        updateDistance.setProgress((int) configuration.getLocationUpdateDistance());
+
     }
 
 

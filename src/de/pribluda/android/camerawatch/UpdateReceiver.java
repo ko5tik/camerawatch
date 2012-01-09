@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * handles periodic widget updates.  provides convenient static methods to activate and
- * deactivate periodic widget updates
+ * handles periodic location updates.  provides convenient static methods to activate and
+ * deactivate. handles widget updates
  *
  * @author Konstantin Pribluda
  */
