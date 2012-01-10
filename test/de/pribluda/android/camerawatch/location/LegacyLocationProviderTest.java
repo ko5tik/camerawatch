@@ -1,5 +1,7 @@
 package de.pribluda.android.camerawatch.location;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -194,10 +196,41 @@ public class LegacyLocationProviderTest {
 
 
     /**
-     *   shall shedule location update properly
+     * shall shedule location update properly
      */
     @Test
-    public void testLocationUpdatesScheduling() {
+    public void testScheduleCancelation(@Mocked(methods = {"scheduleCancelationIntent"}, inverse = true) final LegacyLocationProcessor llp,
+                                        @Mocked final AlarmManager alarmManager,
+                                        @Mocked System system,
+                                        @Mocked final PendingIntent pendingIntent,
+                                        @Mocked final Intent intent,
+                                        @Mocked final Context context) {
+
+        Deencapsulation.setField(llp, "stopUpdatesIntent", intent);
+        Deencapsulation.setField(llp, "context", context);
+
+        new Expectations() {
+            {
+
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                returns(pendingIntent);
+
+
+                context.getSystemService(Context.ALARM_SERVICE);
+                returns(alarmManager);
+
+                System.currentTimeMillis();
+                returns(239l);
+
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME, 239 + LegacyLocationProcessor.CANCEL_INTERVAL, pendingIntent);
+
+            }
+
+        };
+
+        Deencapsulation.invoke(llp, "scheduleCancelationIntent");
 
     }
+
+
 }
