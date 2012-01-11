@@ -233,4 +233,27 @@ public class LegacyLocationProviderTest {
     }
 
 
+    /**
+     * test proper scheduling of updates
+     */
+    @Test
+    public void testUpdateScheduling(@Mocked(methods = {"scheduleLocationUpdates"}, inverse = true) final LegacyLocationProcessor llp,
+                                     @Mocked final LocationManager locationManager,
+                                     @Mocked final Intent intent,
+                                     @Mocked final PendingIntent pi,
+                                     @Mocked final Context context) {
+
+        Deencapsulation.setField(llp, "locationManager", locationManager);
+        Deencapsulation.setField(llp, "sendUpdatesIntent", intent);
+        Deencapsulation.setField(llp, "context", context);
+
+        new Expectations() {
+            {
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT); returns(pi);
+                locationManager.requestLocationUpdates("bramble",0,0,pi);
+            }
+        };
+
+        Deencapsulation.invoke(llp, "scheduleLocationUpdates", "bramble");
+    }
 }
