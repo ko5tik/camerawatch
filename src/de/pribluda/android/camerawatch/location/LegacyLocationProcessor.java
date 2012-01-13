@@ -138,7 +138,7 @@ public class LegacyLocationProcessor implements LocationProcessor {
         // schedule cancelation of location service
         final PendingIntent cancelIntent = PendingIntent.getBroadcast(context, 0, stopUpdatesIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + CANCEL_INTERVAL, configuration.getWidgetUpdateInterval(), cancelIntent);
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, System.currentTimeMillis() + CANCEL_INTERVAL, cancelIntent);
     }
 
 
