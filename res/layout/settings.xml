@@ -36,7 +36,7 @@
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
 
-            <TextView android:text="@string/activeProviderChoice"
+            <TextView android:text="@string/locationProviderChoice"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       style="@style/pirateLabel"/>
@@ -51,21 +51,7 @@
                        android:padding="5dp"
                     />
 
-            <TextView android:text="@string/passiveProviderChoice"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      style="@style/pirateLabel"/>
 
-            <LinearLayout android:id="@+id/passiveContainer"
-                          android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"/>
-
-            <ImageView android:src="@drawable/thin_separator_h"
-                       android:layout_width="fill_parent"
-                       android:layout_height="wrap_content"
-                       android:padding="5dp"
-                    />
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal">
@@ -94,32 +80,7 @@
                        android:layout_height="wrap_content"
                        android:padding="5dp"
                     />
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
 
-                <TextView android:text="@string/updateDistance"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          style="@style/pirateLabel"/>
-                <TextView android:id="@+id/updateDistanceLabel"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="100 m"
-                          style="@style/pirateValueLabel"
-                        />
-            </LinearLayout>
-            <SeekBar android:id="@+id/updateDistance"
-                     android:layout_width="fill_parent"
-                     android:layout_height="wrap_content"
-                     android:padding="5dp"
-                     android:max="500"
-                    />
-            <ImageView android:src="@drawable/thin_separator_h"
-                       android:layout_width="fill_parent"
-                       android:layout_height="wrap_content"
-                       android:padding="5dp"
-                    />
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"

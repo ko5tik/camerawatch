@@ -16,33 +16,37 @@ import android.util.Log;
 public class UpdateReceiver extends BroadcastReceiver {
     public static final String LOG_TAG = "camerawatch.alarmactivator";
     public static final String ACTION = "de.pribluda.android.camerawatch.UPDATE_ALARM";
+    public static final Intent INTENT = new Intent(ACTION);
 
     public static void activate(Context context) {
 
         final Configuration configuration = Configuration.getInstance(context);
 
-        final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
 
         deactivate(context);
 
-        Intent intent = new Intent(ACTION);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        //  schedule it   ASAP
+        int widgetUpdateInterval = configuration.getWidgetUpdateInterval();
+        if (widgetUpdateInterval > 0) {
+
+            final AlarmManager alarmService = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, INTENT, 0);
+            //  schedule it   ASAP
 
 
-        // schedule new alarm
-        alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + configuration.getWidgetUpdateInterval(), configuration.getWidgetUpdateInterval(), pendingIntent);
-        Log.d(LOG_TAG, "scheduled pending intent after: " + configuration.getWidgetUpdateInterval());
-
+            // schedule new alarm
+            alarmService.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + widgetUpdateInterval * 60000, widgetUpdateInterval * 60000, pendingIntent);
+            Log.d(LOG_TAG, "scheduled pending intent after: " + widgetUpdateInterval);
+        }
 
     }
 
-    private static void deactivate(Context context) {
-        Intent intent = new Intent(ACTION);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
+    public static void deactivate(Context context) {
 
-        Log.d(LOG_TAG, "deactivating updates? ...");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, INTENT, PendingIntent.FLAG_NO_CREATE);
+
+
         // cancel if already there
         if (pendingIntent != null) {
             Log.d(LOG_TAG, "deactivated intent");
@@ -53,7 +57,7 @@ public class UpdateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(LOG_TAG, "received intent: " + intent);
+        Log.d(LOG_TAG, "received intent, update state");
         CameraWidgetProvider.displayCurrentState(context);
     }
 }

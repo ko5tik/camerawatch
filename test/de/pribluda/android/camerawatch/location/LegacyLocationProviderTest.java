@@ -37,7 +37,7 @@ public class LegacyLocationProviderTest {
 
             {
 
-                configuration.getActiveProvider();
+                configuration.getLocationProvider();
                 returns("grumple|grample|grimple");
 
                 locationManager.isProviderEnabled("grumple");
@@ -92,7 +92,7 @@ public class LegacyLocationProviderTest {
 
             {
 
-                configuration.getActiveProvider();
+                configuration.getLocationProvider();
                 returns("grumple|grample|grimple");
 
                 locationManager.isProviderEnabled("grumple");

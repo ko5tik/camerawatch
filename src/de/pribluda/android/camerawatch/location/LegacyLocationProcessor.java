@@ -113,7 +113,7 @@ public class LegacyLocationProcessor implements LocationProcessor {
         boolean hasLocationUpdates = false;
 
 
-        for (String provider : configuration.getActiveProvider().split("\\|")) {
+        for (String provider : configuration.getLocationProvider().split("\\|")) {
 
             if (locationManager.isProviderEnabled(provider)) {
                 Log.d(LOG_TAG, "requesting periodic location update from: " + provider);

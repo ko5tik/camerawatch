@@ -12,7 +12,7 @@
 
 
     <application
-            android:label="Kamera Watch"
+            android:label="Kamera-Watch"
             android:icon="@drawable/icon"
             android:theme="@style/pirateBasic"
             >
