@@ -9,6 +9,9 @@ import mockit.FullVerifications;
 import mockit.Mocked;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * assure proper function of camera widget provider
  *
@@ -25,7 +28,7 @@ public class CameraWidgetProviderTest {
                                                     @Mocked final LocationProcessor locationProcessor,
                                                     @Mocked final Log log,
                                                     @Mocked({"notifyNoProvider"}) final CameraWidgetProvider cameraWidgetProvider
-    ) {
+    ) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         new Expectations() {
             {

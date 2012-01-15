@@ -21,7 +21,7 @@
                   android:gravity="center_vertical">
 
         <TextView android:id="@+id/widget_location"
-                  android:textSize="25dp"
+                  android:textSize="20dp"
                   android:textColor="#ff000000"
                   android:text="@string/defaultLocation"
                   android:layout_height="wrap_content"
@@ -30,23 +30,13 @@
                   android:gravity="right"
                 />
         <TextView android:id="@+id/widget_amount_cameras"
-                  android:textSize="25dp"
+                  android:textSize="20dp"
                   android:textColor="#ff000000"
                   android:text="@string/defaultCameras"
                   android:layout_height="wrap_content"
                   android:layout_width="wrap_content"
                   android:paddingLeft="10dp"
                 />
-        <!--
-        <TextView android:id="@+id/widget_security"
-                  android:textSize="20dp"
-                  android:textColor="#ff000000"
-                  android:text="@string/defaultStatus"
-                  android:layout_height="wrap_content"
-                  android:layout_width="wrap_content"
-                  android:paddingLeft="5dp"
-                  android:gravity="right"/>
-         -->
         <TextView android:id="@+id/locationStatus"
                   android:textSize="10dp"
                   android:text="status of location"

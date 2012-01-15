@@ -20,6 +20,7 @@ import de.pribluda.android.camerawatch.location.LocationProcessor;
 import de.pribluda.android.camerawatch.location.LocationProcessorProvider;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Formatter;
@@ -42,6 +43,7 @@ public class CameraWatch extends Activity {
 
     private CameraProvider cameraProvider;
     private CameraAdapter adapter;
+    private Configuration configuration;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class CameraWatch extends Activity {
         } catch (Exception e) {
             Log.e(LOG_TAG, "unable to create camera provider", e);
         }
+
+        configuration = Configuration.getInstance(this);
 
         adapter = new CameraAdapter(this);
         cameraList.setAdapter(adapter);
@@ -125,7 +129,7 @@ public class CameraWatch extends Activity {
      */
     private void updateCameraList(Location location) {
 
-        adapter.setCameraList(cameraProvider.getCameraList(location));
+        adapter.setCameraList(cameraProvider.getCameraList(location, configuration.getMaxCameraDistance()));
     }
 
     /**
@@ -136,7 +140,11 @@ public class CameraWatch extends Activity {
         super.onPause();
 
         locationProcessor.requestLocationUpdate();
-        CameraWidgetProvider.displayCurrentState(this);
+        try {
+            CameraWidgetProvider.displayCurrentState(this);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "exception while updating widget", e);
+        }
         UpdateReceiver.activate(this);
 
     }

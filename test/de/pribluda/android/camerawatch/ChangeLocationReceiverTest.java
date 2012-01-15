@@ -14,6 +14,9 @@ import mockit.NonStrict;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * proper function of change location  receiver shall be assured
  */
@@ -30,7 +33,7 @@ public class ChangeLocationReceiverTest {
                                                           @NonStrict Log l,
                                                           @Mocked final Location location,
                                                           @Mocked final CameraWidgetProvider cwp,
-                                                          @Mocked(methods = {"onReceive"}, inverse = true) final ChangeLocationReceiver clr) {
+                                                          @Mocked(methods = {"onReceive"}, inverse = true) final ChangeLocationReceiver clr) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         new Expectations() {
             {

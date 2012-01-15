@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * handles periodic location updates.  provides convenient static methods to activate and
  * deactivate. handles widget updates
@@ -21,7 +24,6 @@ public class UpdateReceiver extends BroadcastReceiver {
     public static void activate(Context context) {
 
         final Configuration configuration = Configuration.getInstance(context);
-
 
 
         deactivate(context);
@@ -58,6 +60,10 @@ public class UpdateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(LOG_TAG, "received intent, update state");
-        CameraWidgetProvider.displayCurrentState(context);
+        try {
+            CameraWidgetProvider.displayCurrentState(context);
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 }

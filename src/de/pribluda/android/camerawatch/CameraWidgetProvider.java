@@ -11,10 +11,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import android.widget.RemoteViews;
+import de.pribluda.android.camerawatch.data.Camera;
 import de.pribluda.android.camerawatch.location.LocationProcessor;
 import de.pribluda.android.camerawatch.location.LocationProcessorProvider;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Formatter;
@@ -35,10 +37,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-
-
         Log.d(LOG_TAG, "was enabled");
-
     }
 
     @Override
@@ -49,7 +48,11 @@ public class CameraWidgetProvider extends AppWidgetProvider {
 
         UpdateReceiver.activate(context);
         //ChangeLocationReceiver.requestLocationChanges(context);
-        displayCurrentState(context);
+        try {
+            displayCurrentState(context);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "exception while updating widget", e);
+        }
     }
 
     /**
@@ -58,17 +61,17 @@ public class CameraWidgetProvider extends AppWidgetProvider {
      * @param context
      */
     public static void notifyNoProvider(Context context) {
-        updateWidgetState(context, context.getResources().getText(R.string.noLocationProvider), "", "", "");
+        updateWidgetState(context, context.getResources().getText(R.string.noLocationProvider), "", "");
     }
 
 
-    private static void updateWidgetState(Context context, CharSequence amountCameras, String locationCity, String securityStatus, String locationStatus) {
+    private static void updateWidgetState(Context context, CharSequence amountCameras, String locationCity, String locationStatus) {
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.camera_widget_layout);
         views.setOnClickPendingIntent(R.id.camerawidget, PendingIntent.getActivity(context, 0, new Intent(context, CameraWatch.class), PendingIntent.FLAG_UPDATE_CURRENT));
         views.setTextViewText(R.id.widget_amount_cameras, amountCameras);
         views.setTextViewText(R.id.widget_location, locationCity);
-      //  views.setTextViewText(R.id.widget_security, securityStatus);
+        //  views.setTextViewText(R.id.widget_security, securityStatus);
         views.setTextViewText(R.id.locationStatus, locationStatus);
 
         final int[] appWidgetIds = manager.getAppWidgetIds(new ComponentName(CameraWidgetProvider.class.getPackage().getName(), CameraWidgetProvider.class.getName()));
@@ -83,7 +86,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
      *
      * @param context
      */
-    public static void displayCurrentState(Context context) {
+    public static void displayCurrentState(Context context) throws InvocationTargetException, IOException, NoSuchMethodException, IllegalAccessException, InstantiationException {
 
 
         final LocationProcessor locationProcessor = LocationProcessorProvider.instance(context);
@@ -102,28 +105,39 @@ public class CameraWidgetProvider extends AppWidgetProvider {
         final double lon = lastKnownLocation.getLongitude();
 
         Log.d(LOG_TAG, "current location:" + lon + ":" + lat);
+
+        //  create address string
         final Geocoder geocoder = new Geocoder(context);
-        final List<Address> addressList;
+
+        List<Address> addressList = null;
+
         try {
             addressList = geocoder.getFromLocation(lat, lon, 1);
             for (Address address : addressList) {
                 Log.d(LOG_TAG, "decoded address:" + address);
             }
-
-
-            if (addressList.size() > 0) {
-                StringBuilder sb = new StringBuilder();
-                final Formatter formatter = new Formatter(sb);
-
-                formatter.format(" %s (%3.4f : %3.4f) @ %s",lastKnownLocation.getProvider(),  lat, lon, DateFormat.getTimeInstance().format(new Date(lastKnownLocation.getTime())));
-
-                updateWidgetState(context, "keine daten", addressList.get(0).getLocality(), "",
-                        sb.toString());
-            }
         } catch (IOException e) {
             Log.e(LOG_TAG, "excepion  in geocoder", e);
         }
 
+        // create location status string
 
+        StringBuilder sb = new StringBuilder();
+        final Formatter formatter = new Formatter(sb);
+
+        formatter.format(" %s (%3.4f : %3.4f) @ %s", lastKnownLocation.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(lastKnownLocation.getTime())));
+
+        String addressString = "";
+        if (addressList != null && addressList.size() > 0) {
+
+            addressString = addressList.get(0).getLocality();
+
+        }
+
+        // retrieve amount of cameras
+        int size = CameraProvider.instance(context).getCameraList(lastKnownLocation, Configuration.getInstance(context).getMaxCameraDistance()).size();
+
+        updateWidgetState(context, "Anzahl Kameras: " + size, addressString,
+                sb.toString());
     }
 }

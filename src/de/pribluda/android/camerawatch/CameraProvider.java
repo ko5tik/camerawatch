@@ -16,7 +16,6 @@ import java.util.List;
 
 /**
  * provides list of cameras based on location and settings
- * TODO: this is just dumb provider. needs real implementation
  *
  * @author Konstantin Pribluda
  */
@@ -26,9 +25,11 @@ public class CameraProvider {
     private static CameraProvider instance;
     private final List<Camera> cameras;
 
+
     public CameraProvider(InputStream inputStream) throws InvocationTargetException, IOException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+
         cameras = new ArrayList<Camera>(JSONUnmarshaller.unmarshallArray(new JsonReader(new InputStreamReader(inputStream)), Camera.class));
-        Log.d(LOG_TAG, "readc camera list from backend storage");
+        Log.d(LOG_TAG, "read camera list from backend storage");
     }
 
     public static CameraProvider instance(Context context) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -39,7 +40,49 @@ public class CameraProvider {
         return instance;
     }
 
-    public List<Camera> getCameraList(Location location) {
-        return cameras;
+    /**
+     * retrieve list of cameras for supplied location based on supplied location and settings
+     *
+     * @param location POI location
+     * @return list of cameras in distance
+     */
+    public List<Camera> getCameraList(Location location, double distance) {
+        ArrayList<Camera> result = new ArrayList<Camera>();
+
+        for (Camera camera : cameras) {
+            if (cameraAcceptable(camera, location, distance)) {
+                result.add(camera);
+            }
+        }
+
+        return result;
     }
+
+
+    /**
+     * whether given camera has  to be included in list
+     *
+     * @param camera   camera in question
+     * @param location
+     * @param distance
+     * @return
+     */
+    public static boolean cameraAcceptable(Camera camera, Location location, double distance) {
+
+        double result = computeCameraDistance(camera, location);
+        Log.d(LOG_TAG, "camera distance:" + result);
+
+        return (result - (double) location.getAccuracy()) < distance;
+
+
+    }
+
+    private static double computeCameraDistance(Camera camera, Location location) {
+        float[] result = new float[1];
+
+        Location.distanceBetween(camera.getLatitude(), camera.getLongitude(), location.getLatitude(), location.getLongitude(), result);
+        return result[0];
+    }
+
+
 }

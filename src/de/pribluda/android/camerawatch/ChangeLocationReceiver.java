@@ -9,6 +9,9 @@ import android.util.Log;
 import de.pribluda.android.camerawatch.location.LocationProcessor;
 import de.pribluda.android.camerawatch.location.LocationProcessorProvider;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * receives change location events and updates  status provider.  also fires up events to
  * update widget.
@@ -34,7 +37,11 @@ public class ChangeLocationReceiver extends BroadcastReceiver {
             Log.d(LOG_TAG, "received new location: " + location);
             location =  locationProcessor.processLocationUpdate(location);
             // update widget with location data
-            CameraWidgetProvider.displayCurrentState(context);
+            try {
+                CameraWidgetProvider.displayCurrentState(context);
+            } catch (Exception e) {
+                Log.d(LOG_TAG, "exception while updating widget", e);
+            }
         }  else if(intent.hasExtra(LocationProcessor.LOCATION_STOP_UPDATES)) {
             Log.d(LOG_TAG, "canceling location update");
             locationProcessor.stopUpdates();

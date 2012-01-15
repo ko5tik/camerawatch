@@ -10,6 +10,8 @@ import mockit.Mock;
 import mockit.Mocked;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -132,7 +134,7 @@ public class UpdateReceiverTest {
                                     @Mocked final Intent intent,
                                     @Mocked Log l,
                                     @Mocked CameraWidgetProvider c,
-                                    @Mocked(methods = {"onReceive"}, inverse = true) final UpdateReceiver updateReceiver) {
+                                    @Mocked(methods = {"onReceive"}, inverse = true) final UpdateReceiver updateReceiver) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         new Expectations() {
             {
