@@ -1,19 +1,32 @@
 package de.pribluda.android.camerawatch.data;
 
 /**
- * Bean describing camera 
+ * Bean describing camera
  */
 public class Camera {
     String repotrer;
-    String position;
-    String type;
+    String titel;
+    String Typ;
     String owner;
     double longitude;
     double latitude;
     String description;
     String designator;
     String ownerType;
+    String ID;
 
+    /**
+     * camera identifier. used to construct detail URL
+     *
+     * @return
+     */
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
     public String getDescription() {
         return description;
@@ -63,12 +76,12 @@ public class Camera {
         this.ownerType = ownerType;
     }
 
-    public String getPosition() {
-        return position;
+    public String getTitel() {
+        return titel;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setTitel(String titel) {
+        this.titel = titel;
     }
 
     public String getRepotrer() {
@@ -79,11 +92,11 @@ public class Camera {
         this.repotrer = repotrer;
     }
 
-    public String getType() {
-        return type;
+    public String getTyp() {
+        return Typ;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTyp(String typ) {
+        this.Typ = typ;
     }
 }

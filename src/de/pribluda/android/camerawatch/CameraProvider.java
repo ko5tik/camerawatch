@@ -70,7 +70,7 @@ public class CameraProvider {
     public static boolean cameraAcceptable(Camera camera, Location location, double distance) {
 
         double result = computeCameraDistance(camera, location);
-        Log.d(LOG_TAG, "camera distance:" + result);
+        //Log.d(LOG_TAG, "camera distance:" + result);
 
         return (result - (double) location.getAccuracy()) < distance;
 

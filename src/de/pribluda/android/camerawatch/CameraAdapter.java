@@ -49,7 +49,7 @@ public class CameraAdapter extends BaseAdapter {
         final Camera camera = cameras.get(index);
 
         final TextView cameraPosition = (TextView) result.findViewById(R.id.cameraPositionText);
-        cameraPosition.setText(camera.getPosition());
+        cameraPosition.setText(camera.getTitel());
 
         final TextView positionNumber = (TextView) result.findViewById(R.id.cameraPositionNumber);
         positionNumber.setText("" + (index + 1) + ".");
