@@ -3,7 +3,7 @@ package de.pribluda.android.camerawatch.data;
 /**
  * Bean describing camera
  */
-public class Camera {
+public class Camera implements Comparable<Camera> {
     String repotrer;
     String titel;
     String Typ;
@@ -14,6 +14,7 @@ public class Camera {
     String designator;
     String ownerType;
     String ID;
+    double distance;
 
     /**
      * camera identifier. used to construct detail URL
@@ -98,5 +99,30 @@ public class Camera {
 
     public void setTyp(String typ) {
         this.Typ = typ;
+    }
+
+    /**
+     * distance to current point of view. will be set while filtering camera list
+     * @return
+     */
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    /**
+     * compare based on distance set
+     * @param camera
+     * @return
+     */
+    public int compareTo(Camera camera) {
+
+        if(camera == null) {
+            return 1;
+        }
+        return (int) (getDistance() - camera.getDistance());
     }
 }

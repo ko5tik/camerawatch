@@ -100,7 +100,7 @@
             <SeekBar android:id="@+id/displayDistance"
                      android:layout_width="fill_parent"
                      android:layout_height="wrap_content"
-                     android:max="5000"
+                     android:max="500"
 
                     />
             <ImageView android:src="@drawable/thin_separator_h"

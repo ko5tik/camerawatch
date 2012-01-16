@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,6 +57,8 @@ public class CameraProvider {
             }
         }
 
+        Collections.sort(result);
+
         return result;
     }
 
@@ -81,6 +85,7 @@ public class CameraProvider {
         float[] result = new float[1];
 
         Location.distanceBetween(camera.getLatitude(), camera.getLongitude(), location.getLatitude(), location.getLongitude(), result);
+        camera.setDistance(result[0]);
         return result[0];
     }
 
