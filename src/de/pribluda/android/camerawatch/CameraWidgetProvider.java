@@ -47,7 +47,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
         Log.d(LOG_TAG, "was updated, activate location changes");
 
         UpdateReceiver.activate(context);
-        //ChangeLocationReceiver.requestLocationChanges(context);
+
         try {
             displayCurrentState(context);
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class CameraWidgetProvider extends AppWidgetProvider {
         StringBuilder sb = new StringBuilder();
         final Formatter formatter = new Formatter(sb);
 
-        formatter.format(" %s (%3.4f : %3.4f) @ %s", lastKnownLocation.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(lastKnownLocation.getTime())));
+        formatter.format(" %s (%3.4f : %3.4f) @ %s, in %d m", lastKnownLocation.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(lastKnownLocation.getTime())), (int)Configuration.getInstance(context).getMaxCameraDistance());
 
         String addressString = "";
         if (addressList != null && addressList.size() > 0) {
