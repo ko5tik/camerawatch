@@ -29,10 +29,10 @@ public class CameraProviderTest {
         new Expectations() {
             {
                 invoke(CameraProvider.class, "computeCameraDistance", camera, location);
-                returns(200.0);
+                returns(149.0);
 
-                location.getAccuracy();
-                returns(51.0f);
+             //   location.getAccuracy();
+             //   returns(51.0f);
             }
         };
 
@@ -54,10 +54,10 @@ public class CameraProviderTest {
         new Expectations() {
             {
                 invoke(CameraProvider.class, "computeCameraDistance", camera, location);
-                returns(200.0);
+                returns(150.0);
 
-                location.getAccuracy();
-                returns(51.0f);
+           //     location.getAccuracy();
+           //     returns(51.0f);
             }
         };
 
