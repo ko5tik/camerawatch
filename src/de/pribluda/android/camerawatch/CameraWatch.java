@@ -34,6 +34,8 @@ public class CameraWatch extends Activity {
     @InjectView(id = R.id.activityLocationStatus)
     private TextView locationStatusText;
 
+    @InjectView(id = R.id.displayDistanceLabel)
+    private TextView displayDistanceLabel;
     @InjectView(id = R.id.cameraList)
     private ListView cameraList;
 
@@ -82,7 +84,7 @@ public class CameraWatch extends Activity {
         if (location != null) {
             double lat = location.getLatitude();
             double lon = location.getLongitude();
-            
+
             final Geocoder geocoder = new Geocoder(this);
             final List<Address> addressList;
 
@@ -90,7 +92,6 @@ public class CameraWatch extends Activity {
             final Formatter formatter = new Formatter(sb);
             try {
 
-              
 
                 addressList = geocoder.getFromLocation(lat, lon, 1);
                 for (Address address : addressList) {
@@ -99,21 +100,21 @@ public class CameraWatch extends Activity {
 
 
                 if (addressList.size() > 0) {
-              
+
 
                     final Address address = addressList.get(0);
                     StringBuilder adr = new StringBuilder();
                     for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                         adr.append(address.getAddressLine(i)).append(",");
                     }
-                    formatter.format("%s %s (%3.4f : %3.4f) @ %s, auf %d Meter genau", adr.toString(), location.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(location.getTime())), (int)location.getAccuracy());
+                    formatter.format("%s %s (%3.4f : %3.4f) @ %s, auf %d Meter genau", adr.toString(), location.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(location.getTime())), (int) location.getAccuracy());
 
                     locationStatusText.setText(sb.toString());
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "excepion  in geocoder", e);
 
-                formatter.format("Adresse unbekannt, %s (%3.4f : %3.4f) @ %s, auf %d Meter genau", location.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(location.getTime())), (int)location.getAccuracy());
+                formatter.format("Adresse unbekannt, %s (%3.4f : %3.4f) @ %s, auf %d Meter genau", location.getProvider(), lat, lon, DateFormat.getTimeInstance().format(new Date(location.getTime())), (int) location.getAccuracy());
                 locationStatusText.setText(sb.toString());
 
 
@@ -127,7 +128,7 @@ public class CameraWatch extends Activity {
             locationProcessor.requestLocationUpdate();
         }
 
-
+        displayDistanceLabel.setText("im " +  configuration.getMaxCameraDistance() + " meter Umkreis");
     }
 
     /**
@@ -136,7 +137,7 @@ public class CameraWatch extends Activity {
      * @param location
      */
     private void updateCameraList(Location location) {
-        Log.d(LOG_TAG,"setting camera list");
+        Log.d(LOG_TAG, "setting camera list");
         adapter.setCameraList(cameraProvider.getCameraList(location, configuration.getMaxCameraDistance()));
     }
 

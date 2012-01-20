@@ -14,4 +14,8 @@
     <style name="pirateValueLabel"  parent="pirateBasic">
         <item name="android:textSize">20dp</item>
     </style>
+    <style name="pirateBigLabel"  parent="pirateBasic">
+        <item name="android:textSize">25dp</item>
+        <item name="android:padding">5dp</item>
+    </style>
 </resources>

@@ -13,15 +13,23 @@
                    android:layout_height="wrap_content"
                    android:src="@drawable/icon">
         </ImageView>
-
-        <TextView
-                android:text="@string/applicationTitle"
-
-                android:textSize="25dp"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="5dp"
-                android:gravity="center_vertical"/>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical"
+                      android:gravity="center_vertical">
+            <TextView
+                    android:text="@string/applicationTitle"
+                    style="@style/pirateBigLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"/>
+            <TextView
+                    android:id="@+id/displayDistanceLabel"
+                    style="@style/pirateLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"/>
+        </LinearLayout>
     </LinearLayout>
 
     <ImageView android:src="@drawable/thin_separator_h"
@@ -49,7 +57,7 @@
               android:divider="@drawable/thin_separator_h"
               android:choiceMode="singleChoice"
               android:clickable="true"
-          >
+            >
 
     </ListView>
 </LinearLayout>
